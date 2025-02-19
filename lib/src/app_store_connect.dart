@@ -1,3 +1,4 @@
+import 'package:app_store_connect_apis/src/models/app_store_version.dart';
 import 'package:app_store_connect_apis/src/provisioning.dart';
 
 import 'builds.dart';
@@ -34,5 +35,11 @@ class AppStoreConnect {
   /// Gets a list of all uploaded builds
   Future<List<Build>> getAllBuilds() async {
     return _builds.getAllBuilds();
+  }
+
+  Future<List<AppStoreVersion>> getAppVersions() async {
+    List<AppStoreVersion> res = List.empty(growable: true);
+
+    return res;
   }
 }
