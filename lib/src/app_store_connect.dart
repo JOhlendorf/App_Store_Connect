@@ -1,7 +1,4 @@
-import 'dart:io';
-
 import 'package:app_store_connect_apis/src/provisioning.dart';
-import 'package:flutter/services.dart';
 
 import 'builds.dart';
 import 'models/build.dart';
@@ -10,7 +7,6 @@ import 'models/profile.dart';
 class AppStoreConnect {
   final String _issuer;
   final String _keyId;
-  final String _keyFilePath;
   late final String _keyFileContent;
   late final Provisioning _provisioning;
   late final Builds _builds;
@@ -20,8 +16,7 @@ class AppStoreConnect {
   /// [_keyId] Your private key ID from App Store Connect
   ///
   /// [_keyFilePath] Path to the private key file from App Store Connect
-  AppStoreConnect(this._issuer, this._keyId, this._keyFilePath) {
-    loadKeyFileContent();
+  AppStoreConnect(this._issuer, this._keyId, this._keyFileContent) {
     _provisioning = Provisioning(_issuer, _keyId, _keyFileContent);
     _builds = Builds(_issuer, _keyId, _keyFileContent);
   }
@@ -39,14 +34,5 @@ class AppStoreConnect {
   /// Gets a list of all uploaded builds
   Future<List<Build>> getAllBuilds() async {
     return _builds.getAllBuilds();
-  }
-
-  Future<void> loadKeyFileContent() async {
-    try {
-      _keyFileContent = await rootBundle.loadString(_keyFilePath);
-    } catch (e) {
-      throw FileSystemException(
-          'Could not load the Apple App Store Connect key file', _keyFilePath);
-    }
   }
 }
