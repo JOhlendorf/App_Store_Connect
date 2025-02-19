@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:app_store_connect_apis/src/provisioning.dart';
+import 'package:flutter/services.dart';
 
 import 'builds.dart';
 import 'models/build.dart';
@@ -40,9 +41,9 @@ class AppStoreConnect {
     return _builds.getAllBuilds();
   }
 
-  void loadKeyFileContent() {
+  Future<void> loadKeyFileContent() async {
     try {
-      _keyFileContent = File(_keyFilePath).readAsStringSync();
+      _keyFileContent = await rootBundle.loadString(_keyFilePath);
     } catch (e) {
       throw FileSystemException(
           'Could not load the Apple App Store Connect key file', _keyFilePath);
